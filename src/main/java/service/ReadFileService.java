@@ -30,12 +30,8 @@ public class ReadFileService {
             if(lastSpaceIndex == -1)
                 throw new Exception("Invalid talk: " + talk + ". Invalid talk time.");
 
-            String name = talk.substring(0, lastSpaceIndex);
-            String timeStr = talk.substring(lastSpaceIndex + 1);
-            if(name == null || "".equals(name.trim()))
-                throw new Exception("Invalid talk name: " + talk);
-            else if(!timeStr.endsWith(minSuffix) && !timeStr.endsWith(lightningSuffix))
-                throw new Exception("Invalid talk time: " + talk + ". Enter time in min or in lightning");
+            String name = extractName(talk, lastSpaceIndex);
+            String timeStr = extractTime(minSuffix, lightningSuffix, talk, lastSpaceIndex);
 
             int time = 0;
             boolean isLighting = false;
@@ -61,6 +57,20 @@ public class ReadFileService {
         }
         return parsedTalkList;
 
+    }
+
+    private String extractTime(String minSuffix, String lightningSuffix, String talk, int lastSpaceIndex) throws Exception {
+        String timeStr = talk.substring(lastSpaceIndex + 1);
+        if(!timeStr.endsWith(minSuffix) && !timeStr.endsWith(lightningSuffix))
+            throw new Exception("Invalid talk time: " + talk + ". Enter time in min or in lightning");
+        return timeStr;
+    }
+
+    private String extractName(String talk, int lastSpaceIndex) throws Exception {
+        String name = talk.substring(0, lastSpaceIndex);
+        if(name == null || "".equals(name.trim()))
+            throw new Exception("Invalid talk name: " + talk);
+        return name;
     }
 
     public List<String> getTalksFromFile(String fileName) {
