@@ -9,15 +9,9 @@ import java.util.List;
 
 public class ManageConference {
 
-    ReadFileService readFileService;
-    ArrangeConferenceTrackService trackService;
-    OutPutService outPutService;
-
-    public ManageConference(ReadFileService readFileService, ArrangeConferenceTrackService trackService, OutPutService outPutService) {
-        this.readFileService = readFileService;
-        this.trackService = trackService;
-        this.outPutService = outPutService;
-    }
+    ReadFileService readFileService = new ReadFileService();
+    ArrangeConferenceTrackService trackService = new ArrangeConferenceTrackService();
+    OutPutService outPutService = new OutPutService();
 
     public void manageConference(){
         List<Talk> talkList = readFileService.extractTalksFromFile();
